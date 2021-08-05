@@ -23,4 +23,4 @@ mix.js('resources/js/app.js', 'public/js')
         open: false,
         reloadOnRestart: true,
     })
-    /*.sass('resources/css/app.css', 'public/css')*/;
+    .sass('resources/scss/app.scss', 'public/css');
