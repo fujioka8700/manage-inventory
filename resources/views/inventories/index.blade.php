@@ -16,7 +16,7 @@
         </tr>
         @foreach ($items as $item)
         <tr>
-            <td>{{ $item->name }}</td>
+            <td>{{ $item->title }}</td>
             <td>{{ $item->quantity }}</td>
             <td>{{ $item->formatted_updated_at }}</td>
         </tr>

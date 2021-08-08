@@ -11,7 +11,7 @@ class InventoriesController extends Controller
     {
         $items = Item::all();
 
-        return view('items/index',[
+        return view('inventories/index',[
             'items' => $items
         ]);
     }

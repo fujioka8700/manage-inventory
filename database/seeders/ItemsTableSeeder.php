@@ -16,13 +16,13 @@ class ItemsTableSeeder extends Seeder
     public function run()
     {
         $items = [
-            ['name' => 'スポンジ', 'quantity'=> 7],
-            ['name' => 'ゴミ袋', 'quantity'=> 4]
+            ['title' => 'スポンジ', 'quantity'=> 7],
+            ['title' => 'ゴミ袋', 'quantity'=> 4]
         ];
 
         foreach($items as $item) {
             DB::table('items')->insert([
-                'name' => $item['name'],
+                'title' => $item['title'],
                 'quantity' => $item['quantity'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
