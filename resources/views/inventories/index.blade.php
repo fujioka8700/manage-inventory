@@ -8,6 +8,7 @@
     <title>在庫一覧</title>
 </head>
 <body>
+    <a href="{{ route('inventories.new') }}">新規在庫データの追加</a>
     <h1>在庫一覧</h1>
     <table>
         <tr>
