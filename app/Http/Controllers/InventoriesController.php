@@ -32,8 +32,8 @@ class InventoriesController extends Controller
 
     /**
      * 新しい在庫作成
-     * @param Request $request
-     * @return \Illuminate\View\View
+     * @param NewItem $request
+     * @return Illuminate\Support\Facades\Redirect
      */
     public function new(NewItem $request)
     {
@@ -45,10 +45,6 @@ class InventoriesController extends Controller
 
         $item->save();
 
-        $items = Item::all();
-
-        return view('inventories/index',[
-            'items' => $items
-        ]);
+        return redirect()->route('inventories.index');
     }
 }
