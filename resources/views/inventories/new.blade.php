@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+<div>
+    <a href="{{ url()->previous() }}">在庫一覧へ</a>
+</div>
 @if ($errors->any())
     <div>
         <ul>
