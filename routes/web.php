@@ -19,5 +19,8 @@ use App\Http\Controllers\InventoriesController;
 // });
 
 Route::get('/inventories', [InventoriesController::class, 'index'])->name('inventories.index');
+
 Route::get('/inventories/new', [InventoriesController::class, 'showNewForm'])->name('inventories.new');
 Route::post('/inventories/new', [InventoriesController::class, 'new']);
+
+Route::get('/inventories/{item}', [InventoriesController::class, 'showItem'])->name('inventories.item');

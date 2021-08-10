@@ -47,4 +47,17 @@ class InventoriesController extends Controller
 
         return redirect()->route('inventories.index');
     }
+
+    /**
+     * 在庫データ詳細、表示
+     * @return \Illuminate\View\View
+     */
+    public function showItem(Item $item)
+    {
+        $current_item = Item::find($item->id);
+
+        return view('inventories/item',[
+            'current_item' => $current_item,
+        ]);
+    }
 }
