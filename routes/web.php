@@ -24,3 +24,5 @@ Route::get('/inventories/new', [InventoriesController::class, 'showNewForm'])->n
 Route::post('/inventories/new', [InventoriesController::class, 'new']);
 
 Route::get('/inventories/{item}', [InventoriesController::class, 'showItem'])->name('inventories.item');
+
+Route::get('/inventories/{item}/edit', [InventoriesController::class, 'showEditForm'])->name('inventories.edit');

@@ -60,4 +60,14 @@ class InventoriesController extends Controller
             'current_item' => $current_item,
         ]);
     }
+
+    /**
+     * 在庫データ更新フォーム、表示
+     */
+    public function showEditForm(Item $item)
+    {
+        return view('inventories/edit',[
+            'current_item' => $item,
+        ]);
+    }
 }
