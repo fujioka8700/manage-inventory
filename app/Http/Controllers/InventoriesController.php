@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Http\Requests\NewItem;
+use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 
 class InventoriesController extends Controller
@@ -76,9 +77,18 @@ class InventoriesController extends Controller
 
     /**
      * 在庫データの更新
+     * @param App\Models\Item
+     * @return App\Http\Requests\EditItem
      */
-    public function edit(Item $item, Request $request)
+    public function edit(Item $item, EditItem $request)
     {
+        $item = Item::find($item->id);
+
+        $item->title = $request->title;
+        $item->quantity = $request->quantity;
+
+        $item->save();
+
         return redirect()->route('inventories.index');
     }
 }

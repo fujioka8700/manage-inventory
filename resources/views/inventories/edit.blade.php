@@ -5,6 +5,21 @@
 @endsection
 
 @section('content')
+<div>
+    <a href="{{ route('inventories.index') }}">在庫一覧へ</a>
+</div>
+<div>
+    <a href="{{ route('inventories.item', [ 'item' => $current_item->id ]) }}">編集を中止する</a>
+</div>
+@if ($errors->any())
+<div>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <h1>在庫データの更新</h1>
 <form action="{{ route('inventories.edit', [ 'item' => $current_item->id ]) }}" method="post">
     @csrf
