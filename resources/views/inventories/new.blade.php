@@ -22,13 +22,13 @@
     @csrf
     <div>
         <label for="inventory_title">物品名</label>
-        <input id="inventory_title" name="inventory_title" type="text" value="{{ old('inventory_title')}}"
+        <input id="inventory_title" name="title" type="text" value="{{ old('title') }}"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div>
         <label for="inventory_quantity">数量</label>
-        <input id="inventory_title" name="inventory_quantity" type="number" min="0" max="100"
-            value="{{ old('inventory_quantity') ? old('inventory_quantity') : 0 }}"
+        <input id="inventory_title" name="quantity" type="number" min="0" max="100"
+            value="{{ old('quantity') ? old('quantity') : 0 }}"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div>

@@ -32,16 +32,16 @@ class InventoriesController extends Controller
 
     /**
      * 新しい在庫作成
-     * @param NewItem $request
+     * @param App\Http\Requests\NewItem
      * @return Illuminate\Support\Facades\Redirect
      */
     public function new(NewItem $request)
     {
         $item = new Item();
 
-        $item->title = $request->inventory_title;
+        $item->title = $request->title;
 
-        $item->quantity = $request->inventory_quantity;
+        $item->quantity = $request->quantity;
 
         $item->save();
 
@@ -50,6 +50,7 @@ class InventoriesController extends Controller
 
     /**
      * 在庫データ詳細、表示
+     * @param App\Models\Item
      * @return \Illuminate\View\View
      */
     public function showItem(Item $item)
@@ -63,11 +64,21 @@ class InventoriesController extends Controller
 
     /**
      * 在庫データ更新フォーム、表示
+     * @param App\Models\Item
+     * @return \Illuminate\View\View
      */
     public function showEditForm(Item $item)
     {
         return view('inventories/edit',[
             'current_item' => $item,
         ]);
+    }
+
+    /**
+     * 在庫データの更新
+     */
+    public function edit(Item $item, Request $request)
+    {
+        return redirect()->route('inventories.index');
     }
 }

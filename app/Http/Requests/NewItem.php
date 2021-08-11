@@ -24,8 +24,8 @@ class NewItem extends FormRequest
     public function rules()
     {
         return [
-            'inventory_title' => 'required|max:20',
-            'inventory_quantity' => 'required|between:0,3',
+            'title' => 'required|max:20',
+            'quantity' => 'required|between:0,3',
         ];
     }
 
@@ -37,8 +37,8 @@ class NewItem extends FormRequest
     public function attributes()
     {
         return [
-            'inventory_title' => '物品名',
-            'inventory_quantity' => '数量',
+            'title' => '物品名',
+            'quantity' => '数量',
         ];
     }
 }
