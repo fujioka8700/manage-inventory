@@ -39,3 +39,7 @@
     </div>
 </form>
 @endsection
+
+@section('scripts')
+@include('share.scripts')
+@endsection

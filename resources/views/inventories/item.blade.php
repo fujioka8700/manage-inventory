@@ -11,6 +11,9 @@
 <div>
     <a href="{{ route('inventories.edit', $current_item->id) }}">この在庫データを編集する</a>
 </div>
+<div>
+    <a href="https://www.yahoo.co.jp/" class="confirmation">この在庫データを削除する</a>
+</div>
 <h1>在庫データ詳細</h1>
 <table>
     <tbody>
@@ -36,4 +39,8 @@
         </tr>
     </tbody>
 </table>
+@endsection
+
+@section('scripts')
+@include('share.scripts')
 @endsection
