@@ -8,6 +8,9 @@
 <div>
     <a href="{{ route('inventories.index') }}">在庫一覧へ</a>
 </div>
+<div>
+    <a href="{{ route('inventories.edit', $current_item->id) }}">この在庫データを編集する</a>
+</div>
 <h1>在庫データ詳細</h1>
 <table>
     <tbody>

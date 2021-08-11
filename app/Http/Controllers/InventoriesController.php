@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Http\Requests\NewItem;
+use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 
 class InventoriesController extends Controller
@@ -32,16 +33,16 @@ class InventoriesController extends Controller
 
     /**
      * 新しい在庫作成
-     * @param NewItem $request
+     * @param App\Http\Requests\NewItem
      * @return Illuminate\Support\Facades\Redirect
      */
     public function new(NewItem $request)
     {
         $item = new Item();
 
-        $item->title = $request->inventory_title;
+        $item->title = $request->title;
 
-        $item->quantity = $request->inventory_quantity;
+        $item->quantity = $request->quantity;
 
         $item->save();
 
@@ -50,6 +51,7 @@ class InventoriesController extends Controller
 
     /**
      * 在庫データ詳細、表示
+     * @param App\Models\Item
      * @return \Illuminate\View\View
      */
     public function showItem(Item $item)
@@ -59,5 +61,34 @@ class InventoriesController extends Controller
         return view('inventories/item',[
             'current_item' => $current_item,
         ]);
+    }
+
+    /**
+     * 在庫データ更新フォーム、表示
+     * @param App\Models\Item
+     * @return \Illuminate\View\View
+     */
+    public function showEditForm(Item $item)
+    {
+        return view('inventories/edit',[
+            'current_item' => $item,
+        ]);
+    }
+
+    /**
+     * 在庫データの更新
+     * @param App\Models\Item
+     * @return App\Http\Requests\EditItem
+     */
+    public function edit(Item $item, EditItem $request)
+    {
+        $item = Item::find($item->id);
+
+        $item->title = $request->title;
+        $item->quantity = $request->quantity;
+
+        $item->save();
+
+        return redirect()->route('inventories.index');
     }
 }
