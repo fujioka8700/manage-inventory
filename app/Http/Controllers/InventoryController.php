@@ -7,7 +7,7 @@ use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 
-class InventoriesController extends Controller
+class InventoryController extends Controller
 {
     /**
      * 在庫一覧、表示
