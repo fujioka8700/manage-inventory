@@ -1840,7 +1840,18 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // 確認ダイアログを、表示する
+
+
+var elems = document.getElementsByClassName('confirmation');
+
+var confirmIt = function confirmIt(e) {
+  if (!confirm('削除してよろしいですか？')) e.preventDefault();
+};
+
+for (var i = 0, l = elems.length; i < l; i++) {
+  elems[i].addEventListener('click', confirmIt, false);
+}
 
 /***/ }),
 

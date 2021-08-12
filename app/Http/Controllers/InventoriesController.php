@@ -41,9 +41,7 @@ class InventoriesController extends Controller
         $item = new Item();
 
         $item->title = $request->title;
-
         $item->quantity = $request->quantity;
-
         $item->save();
 
         return redirect()->route('inventories.index');
@@ -78,7 +76,7 @@ class InventoriesController extends Controller
     /**
      * 在庫データの更新
      * @param App\Models\Item
-     * @return App\Http\Requests\EditItem
+     * @return Illuminate\Support\Facades\Redirect
      */
     public function edit(Item $item, EditItem $request)
     {
@@ -86,8 +84,19 @@ class InventoriesController extends Controller
 
         $item->title = $request->title;
         $item->quantity = $request->quantity;
-
         $item->save();
+
+        return redirect()->route('inventories.index');
+    }
+
+    /**
+     * 在庫データの削除
+     * @param App\Models\Item
+     * @return Illuminate\Support\Facades\Redirect
+     */
+    public function delete(Item $item)
+    {
+        Item::destroy($item->id);
 
         return redirect()->route('inventories.index');
     }

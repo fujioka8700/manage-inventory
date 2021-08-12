@@ -26,3 +26,7 @@
     </tbody>
 </table>
 @endsection
+
+@section('scripts')
+@include('share.scripts')
+@endsection
