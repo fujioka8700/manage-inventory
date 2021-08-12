@@ -18,14 +18,14 @@ use App\Http\Controllers\InventoryController;
 //     return view('welcome');
 // });
 
-Route::get('/inventories', [InventoryController::class, 'index'])->name('inventories.index');
+Route::get('/inventories', [InventoryController::class, 'index'])->name('inventory.index');
 
-Route::get('/inventories/new', [InventoryController::class, 'showNewForm'])->name('inventories.new');
+Route::get('/inventories/new', [InventoryController::class, 'showNewForm'])->name('inventory.new');
 Route::post('/inventories/new', [InventoryController::class, 'new']);
 
-Route::get('/inventories/{item}', [InventoryController::class, 'showItem'])->name('inventories.item');
+Route::get('/inventories/{item}', [InventoryController::class, 'showItem'])->name('inventory.item');
 
 Route::post('/inventories/{item}', [InventoryController::class, 'delete'])->name('inventory.delete');
 
-Route::get('/inventories/{item}/edit', [InventoryController::class, 'showEditForm'])->name('inventories.edit');
+Route::get('/inventories/{item}/edit', [InventoryController::class, 'showEditForm'])->name('inventory.edit');
 Route::post('/inventories/{item}/edit', [InventoryController::class, 'edit']);

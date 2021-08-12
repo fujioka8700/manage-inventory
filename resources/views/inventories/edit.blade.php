@@ -6,10 +6,10 @@
 
 @section('content')
 <div>
-    <a href="{{ route('inventories.index') }}">在庫一覧へ</a>
+    <a href="{{ route('inventory.index') }}">在庫一覧へ</a>
 </div>
 <div>
-    <a href="{{ route('inventories.item', [ 'item' => $current_item->id ]) }}">編集を中止する</a>
+    <a href="{{ route('inventory.item', [ 'item' => $current_item->id ]) }}">編集を中止する</a>
 </div>
 @if ($errors->any())
 <div>
@@ -21,7 +21,7 @@
 </div>
 @endif
 <h1>在庫データの更新</h1>
-<form action="{{ route('inventories.edit', [ 'item' => $current_item->id ]) }}" method="post">
+<form action="{{ route('inventory.edit', [ 'item' => $current_item->id ]) }}" method="post">
     @csrf
     <div>
         <label for="inventory_title">物品名</label>

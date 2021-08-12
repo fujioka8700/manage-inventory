@@ -44,7 +44,7 @@ class InventoryController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('inventories.index');
+        return redirect()->route('inventory.index');
     }
 
     /**
@@ -86,7 +86,7 @@ class InventoryController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('inventories.index');
+        return redirect()->route('inventory.index');
     }
 
     /**
@@ -98,6 +98,6 @@ class InventoryController extends Controller
     {
         Item::destroy($item->id);
 
-        return redirect()->route('inventories.index');
+        return redirect()->route('inventory.index');
     }
 }
