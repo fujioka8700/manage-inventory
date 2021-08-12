@@ -7,7 +7,7 @@ use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 
-class InventoriesController extends Controller
+class InventoryController extends Controller
 {
     /**
      * 在庫一覧、表示
@@ -44,7 +44,7 @@ class InventoriesController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('inventories.index');
+        return redirect()->route('inventory.index');
     }
 
     /**
@@ -86,7 +86,7 @@ class InventoriesController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('inventories.index');
+        return redirect()->route('inventory.index');
     }
 
     /**
@@ -98,6 +98,6 @@ class InventoriesController extends Controller
     {
         Item::destroy($item->id);
 
-        return redirect()->route('inventories.index');
+        return redirect()->route('inventory.index');
     }
 }

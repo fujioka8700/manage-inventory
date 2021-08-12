@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<a href="{{ route('inventories.new') }}">新規在庫データの追加</a>
+<a href="{{ route('inventory.new') }}">新規在庫データの追加</a>
 <h1>在庫一覧</h1>
 <table>
     <thead>
@@ -18,7 +18,7 @@
     <tbody>
         @foreach ($items as $item)
         <tr>
-            <td><a href="{{ route('inventories.item', [ 'item' => $item->id ]) }}">{{ $item->title }}</a></td>
+            <td><a href="{{ route('inventory.item', [ 'item' => $item->id ]) }}">{{ $item->title }}</a></td>
             <td>{{ $item->quantity }}</td>
             <td>{{ $item->formatted_updated_at }}</td>
         </tr>

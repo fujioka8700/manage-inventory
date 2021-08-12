@@ -6,10 +6,10 @@
 
 @section('content')
 <div>
-    <a href="{{ route('inventories.index') }}">在庫一覧へ</a>
+    <a href="{{ route('inventory.index') }}">在庫一覧へ</a>
 </div>
 <div>
-    <a href="{{ route('inventories.edit', $current_item->id) }}">この在庫データを編集する</a>
+    <a href="{{ route('inventory.edit', $current_item->id) }}">この在庫データを編集する</a>
 </div>
 <div>
     <form method="post" name="form1" action="{{ route('inventory.delete', $current_item->id) }}">
