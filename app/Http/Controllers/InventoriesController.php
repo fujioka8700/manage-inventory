@@ -91,4 +91,11 @@ class InventoriesController extends Controller
 
         return redirect()->route('inventories.index');
     }
+
+    public function delete(Item $item)
+    {
+        ddd($item);
+
+        return 'Hello';
+    }
 }
