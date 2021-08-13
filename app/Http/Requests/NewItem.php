@@ -26,6 +26,7 @@ class NewItem extends FormRequest
         return [
             'title' => 'required|max:20',
             'quantity' => 'required|between:0,3',
+            'image' => 'file|image|mimes:png,jpeg',
         ];
     }
 
@@ -39,6 +40,7 @@ class NewItem extends FormRequest
         return [
             'title' => '物品名',
             'quantity' => '数量',
+            'image' => '画像',
         ];
     }
 }

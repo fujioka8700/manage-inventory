@@ -10,6 +10,7 @@
 <table>
     <thead>
         <tr>
+            <th>写真</th>
             <th>物品名</th>
             <th>数量</th>
             <th>更新日</th>
@@ -18,6 +19,7 @@
     <tbody>
         @foreach ($items as $item)
         <tr>
+            <td><img src="{{ Storage::url($item->file_path) }}" alt="" class="index-image_size"></td>
             <td><a href="{{ route('inventory.item', [ 'item' => $item->id ]) }}">{{ $item->title }}</a></td>
             <td>{{ $item->quantity }}</td>
             <td>{{ $item->formatted_updated_at }}</td>

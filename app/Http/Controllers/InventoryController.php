@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\UploadImage;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
@@ -40,6 +39,16 @@ class InventoryController extends Controller
     public function new(NewItem $request)
     {
         $item = new Item();
+
+        $upload_image = $request->file('image');
+        if ($upload_image) {
+            $path = $upload_image->store('public/uploads');
+
+            if ($path) {
+                $item->file_name = $upload_image->getClientOriginalName();
+                $item->file_path = $path;
+            }
+        }
 
         $item->title = $request->title;
         $item->quantity = $request->quantity;
