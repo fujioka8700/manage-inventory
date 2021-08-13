@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InventoryController extends Controller
 {
@@ -106,6 +107,8 @@ class InventoryController extends Controller
      */
     public function delete(Item $item)
     {
+        Storage::delete($item->file_path);
+
         Item::destroy($item->id);
 
         return redirect()->route('inventory.index');
