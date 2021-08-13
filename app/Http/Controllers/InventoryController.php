@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\UploadImage;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
