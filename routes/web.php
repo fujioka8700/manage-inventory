@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +18,14 @@ use App\Http\Controllers\InventoryController;
 //     return view('welcome');
 // });
 
-Route::get('/inventories', [InventoryController::class, 'index'])->name('inventory.index');
+Route::get('/inventories', [ItemController::class, 'index'])->name('inventory.index');
 
-Route::get('/inventories/new', [InventoryController::class, 'showNewForm'])->name('inventory.new');
-Route::post('/inventories/new', [InventoryController::class, 'new']);
+Route::get('/inventories/new', [ItemController::class, 'showNewForm'])->name('inventory.new');
+Route::post('/inventories/new', [ItemController::class, 'new']);
 
-Route::get('/inventories/{item}', [InventoryController::class, 'showItem'])->name('inventory.item');
+Route::get('/inventories/{item}', [ItemController::class, 'showItem'])->name('inventory.item');
 
-Route::post('/inventories/{item}', [InventoryController::class, 'delete'])->name('inventory.delete');
+Route::post('/inventories/{item}', [ItemController::class, 'delete'])->name('inventory.delete');
 
-Route::get('/inventories/{item}/edit', [InventoryController::class, 'showEditForm'])->name('inventory.edit');
-Route::post('/inventories/{item}/edit', [InventoryController::class, 'edit']);
+Route::get('/inventories/{item}/edit', [ItemController::class, 'showEditForm'])->name('inventory.edit');
+Route::post('/inventories/{item}/edit', [ItemController::class, 'edit']);

@@ -27,13 +27,14 @@
     </div>
     <div>
         <label for="inventory_quantity">数量</label>
-        <input id="inventory_title" name="quantity" type="number" min="0" max="100"
-            value="{{ old('quantity') ?? 0 }}"
+        <input id="inventory_title" name="quantity" type="number" min="0" max="100" value="{{ old('quantity') ?? 0 }}"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div>
-        @foreach ($categories as $key => $category)
-            <input type="checkbox" id="checkbox{{ $key }}" name="checkbox[]" value="{{ $category->id }}"><label for="checkbox{{ $key }}">{{ $category->title }}</label>
+        @foreach ($categories as $category)
+        <label>
+            <input type="checkbox" name="category[]" value="{{ $category->id }}">{{ $category->name }}
+        </label>
         @endforeach
     </div>
     <div>

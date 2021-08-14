@@ -9,7 +9,7 @@ use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class InventoryController extends Controller
+class ItemController extends Controller
 {
     /**
      * 在庫一覧、表示
@@ -39,11 +39,9 @@ class InventoryController extends Controller
      */
     public function showNewForm()
     {
-        $category = Category::all();
+        $categories = Category::all();
 
-        return view('inventories/new', [
-            'categories' => $category
-        ]);
+        return view('inventories/new', compact("categories"));
     }
 
     /**
@@ -53,10 +51,16 @@ class InventoryController extends Controller
      */
     public function new(NewItem $request)
     {
-        ddd($request->checkbox);
-
         $item = new Item();
 
+        // カテゴリ登録
+        // if ($request->checkbox) {
+        //     $category_id = implode(",", $request->checkbox);
+
+        //     $item->category_id = $category_id;
+        // }
+
+        // サムネイル画像、登録
         $upload_image = $request->file('image');
         if ($upload_image) {
             $path = $upload_image->store('public/uploads');

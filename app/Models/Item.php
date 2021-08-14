@@ -37,4 +37,12 @@ class Item extends Model
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['created_at'])->format('Y/m/d H:i:s');
     }
+
+    /**
+     * belongsToManyメソッドで多対多として関連付け
+     */
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category')->withTimestamps();
+    }
 }
