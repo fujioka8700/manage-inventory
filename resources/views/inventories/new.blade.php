@@ -32,6 +32,11 @@
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div>
+        @foreach ($categories as $key => $category)
+            <input type="checkbox" id="checkbox{{ $key }}" name="checkbox[]" value="{{ $category->id }}"><label for="checkbox{{ $key }}">{{ $category->title }}</label>
+        @endforeach
+    </div>
+    <div>
         <input type="file" name="image" accept="image/png, image/jpeg">
     </div>
     <div>

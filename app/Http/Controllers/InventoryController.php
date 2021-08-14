@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
@@ -38,7 +39,11 @@ class InventoryController extends Controller
      */
     public function showNewForm()
     {
-        return view('inventories/new');
+        $category = Category::all();
+
+        return view('inventories/new', [
+            'categories' => $category
+        ]);
     }
 
     /**
@@ -48,6 +53,8 @@ class InventoryController extends Controller
      */
     public function new(NewItem $request)
     {
+        ddd($request->checkbox);
+
         $item = new Item();
 
         $upload_image = $request->file('image');
