@@ -6,16 +6,26 @@ use App\Models\Item;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InventoryController extends Controller
 {
     /**
      * 在庫一覧、表示
-     * @return \Illuminate\View\View
+     * @param Illuminate\Http\Request
+     * @return Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::all();
+        $keyword = $request->input('keyword');
+
+        $query = Item::query();
+
+        if (!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%");
+        }
+
+        $items = $query->get();
 
         return view('inventories/index',[
             'items' => $items
@@ -24,7 +34,7 @@ class InventoryController extends Controller
 
     /**
      * 新しい在庫作成フォーム、表示
-     * @return \Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function showNewForm()
     {
@@ -40,6 +50,16 @@ class InventoryController extends Controller
     {
         $item = new Item();
 
+        $upload_image = $request->file('image');
+        if ($upload_image) {
+            $path = $upload_image->store('public/uploads');
+
+            if ($path) {
+                $item->file_name = $upload_image->getClientOriginalName();
+                $item->file_path = $path;
+            }
+        }
+
         $item->title = $request->title;
         $item->quantity = $request->quantity;
         $item->save();
@@ -50,7 +70,7 @@ class InventoryController extends Controller
     /**
      * 在庫データ詳細、表示
      * @param App\Models\Item
-     * @return \Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function showItem(Item $item)
     {
@@ -64,7 +84,7 @@ class InventoryController extends Controller
     /**
      * 在庫データ更新フォーム、表示
      * @param App\Models\Item
-     * @return \Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function showEditForm(Item $item)
     {
@@ -96,6 +116,8 @@ class InventoryController extends Controller
      */
     public function delete(Item $item)
     {
+        Storage::delete($item->file_path);
+
         Item::destroy($item->id);
 
         return redirect()->route('inventory.index');

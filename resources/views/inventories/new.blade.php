@@ -18,7 +18,7 @@
 </div>
 @endif
 <h1>新しい在庫データの追加</h1>
-<form action="{{ route('inventory.new') }}" method="post">
+<form action="{{ route('inventory.new') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div>
         <label for="inventory_title">物品名</label>
@@ -30,6 +30,9 @@
         <input id="inventory_title" name="quantity" type="number" min="0" max="100"
             value="{{ old('quantity') ?? 0 }}"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+    <div>
+        <input type="file" name="image" accept="image/png, image/jpeg">
     </div>
     <div>
         <input type="submit" value="この内容で登録する">
