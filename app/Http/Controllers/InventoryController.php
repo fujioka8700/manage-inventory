@@ -12,7 +12,8 @@ class InventoryController extends Controller
 {
     /**
      * 在庫一覧、表示
-     * @return \Illuminate\View\View
+     * @param Illuminate\Http\Request
+     * @return Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -33,7 +34,7 @@ class InventoryController extends Controller
 
     /**
      * 新しい在庫作成フォーム、表示
-     * @return \Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function showNewForm()
     {
@@ -69,7 +70,7 @@ class InventoryController extends Controller
     /**
      * 在庫データ詳細、表示
      * @param App\Models\Item
-     * @return \Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function showItem(Item $item)
     {
@@ -83,7 +84,7 @@ class InventoryController extends Controller
     /**
      * 在庫データ更新フォーム、表示
      * @param App\Models\Item
-     * @return \Illuminate\View\View
+     * @return Illuminate\View\View
      */
     public function showEditForm(Item $item)
     {
