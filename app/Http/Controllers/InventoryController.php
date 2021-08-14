@@ -14,9 +14,17 @@ class InventoryController extends Controller
      * 在庫一覧、表示
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Item::all();
+        $keyword = $request->input('keyword');
+
+        $query = Item::query();
+
+        if (!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%");
+        }
+
+        $items = $query->get();
 
         return view('inventories/index',[
             'items' => $items

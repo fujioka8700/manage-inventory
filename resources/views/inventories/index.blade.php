@@ -7,6 +7,12 @@
 @section('content')
 <a href="{{ route('inventory.new') }}">新規在庫データの追加</a>
 <h1>在庫一覧</h1>
+<form action="{{ route('inventory.index') }}" method="get">
+    <input type="text" name="keyword"
+        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    <input type="submit" value="検索">
+</form>
+@if ($items->count())
 <table>
     <thead>
         <tr>
@@ -27,6 +33,9 @@
         @endforeach
     </tbody>
 </table>
+@else
+<p>見つかりませんでした。</p>
+@endif
 @endsection
 
 @section('scripts')
