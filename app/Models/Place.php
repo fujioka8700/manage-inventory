@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     use HasFactory;
+
+    /**
+     * itemsテーブルと関連付け(多対多)
+     */
+    public function items()
+    {
+        return $this->belongsToMany('App\Models\Item')->withTimestamps();
+    }
 }

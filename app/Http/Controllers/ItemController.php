@@ -54,8 +54,6 @@ class ItemController extends Controller
      */
     public function new(NewItem $request)
     {
-        ddd($request->place);
-
         $item = new Item();
 
         // サムネイル画像、登録
@@ -73,8 +71,11 @@ class ItemController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        // 中間テーブルに、在庫のカテゴリを追加
+        // 中間テーブルに、在庫のカテゴリを使用
         $item->categories()->attach(request()->categories);
+
+        // 中間テーブルに、在庫の保管場所を使用
+        $item->places()->attach(request()->place);
 
         return redirect()->route('item.index');
     }
