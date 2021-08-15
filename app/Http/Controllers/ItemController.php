@@ -102,13 +102,16 @@ class ItemController extends Controller
     public function showEditForm(Item $item)
     {
         $categories = $item->categories->pluck('id')->toArray();
+        $place = $item->places->pluck('id')->toArray();
 
         $category_list = Category::all();
+        $place_list = Place::all();
 
         return view('inventories/edit',[
             'current_item' => $item,
             'categories' => $categories,
-            'category_list' => $category_list
+            'category_list' => $category_list,
+            'place_list' => $place_list
         ]);
     }
 

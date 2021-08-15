@@ -42,6 +42,14 @@
             </td>
         </tr>
         <tr>
+            <th>保管場所</th>
+            <td>
+                @foreach ($current_item->places as $place)
+                {{ $place->name }}
+                @endforeach
+            </td>
+        </tr>
+        <tr>
             <th>在庫データ更新日</th>
             <td>{{ $current_item->formatted_show_item_updated_at }}</td>
         </tr>
