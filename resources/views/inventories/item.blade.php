@@ -6,13 +6,13 @@
 
 @section('content')
 <div>
-    <a href="{{ route('inventory.index') }}">在庫一覧へ</a>
+    <a href="{{ route('item.index') }}">在庫一覧へ</a>
 </div>
 <div>
-    <a href="{{ route('inventory.edit', $current_item->id) }}">この在庫データを編集する</a>
+    <a href="{{ route('item.edit', $current_item->id) }}">この在庫データを編集する</a>
 </div>
 <div>
-    <form method="post" name="form1" action="{{ route('inventory.delete', $current_item->id) }}">
+    <form method="post" name="form1" action="{{ route('item.delete', $current_item->id) }}">
         @csrf
         <input type="hidden">
         <a href="javascript:form1.submit()" class="confirmation">この在庫データを削除する</a>
@@ -34,6 +34,14 @@
             <td>{{ $current_item->quantity }}</td>
         </tr>
         <tr>
+            <th>カテゴリ</th>
+            <td>
+                @foreach ($current_item->categories as $category)
+                {{ $category->name }}
+                @endforeach
+            </td>
+        </tr>
+        <tr>
             <th>在庫データ更新日</th>
             <td>{{ $current_item->formatted_show_item_updated_at }}</td>
         </tr>
@@ -43,6 +51,7 @@
         </tr>
     </tbody>
 </table>
+<img src="{{ Storage::url($current_item->file_path) }}" alt="{{ $current_item->title }}">
 @endsection
 
 @section('scripts')

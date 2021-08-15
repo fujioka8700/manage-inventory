@@ -16,8 +16,11 @@ class ItemsTableSeeder extends Seeder
     public function run()
     {
         $items = [
-            ['title' => 'スポンジ', 'quantity'=> 7],
-            ['title' => 'ゴミ袋', 'quantity'=> 4]
+            ['title' => 'トイレットペーパー', 'quantity'=> 2],
+            ['title' => 'ティシュペーパー', 'quantity'=> 4],
+            ['title' => 'ゴミ袋', 'quantity'=> 1],
+            ['title' => 'ヌメリ取り', 'quantity'=> 8],
+            ['title' => '洗濯洗剤', 'quantity'=> 3]
         ];
 
         foreach($items as $item) {
