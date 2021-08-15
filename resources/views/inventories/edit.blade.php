@@ -35,6 +35,13 @@
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div>
+        @foreach ($category_list as $category)
+        <label>
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}" @if(in_array($category->id, $categories)) checked @endif>{{ $category->name }}
+        </label>
+        @endforeach
+    </div>
+    <div>
         <input type="submit" value="この内容で更新する">
     </div>
 </form>

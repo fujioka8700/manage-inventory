@@ -18,6 +18,7 @@
         <tr>
             <th>写真</th>
             <th>物品名</th>
+            <th>カテゴリ</th>
             <th>数量</th>
             <th>更新日</th>
         </tr>
@@ -27,6 +28,11 @@
         <tr>
             <td><img src="{{ Storage::url($item->file_path) }}" alt="" class="index-image_size"></td>
             <td><a href="{{ route('item.item', [ 'item' => $item->id ]) }}">{{ $item->title }}</a></td>
+            <td>
+                @foreach ($item->categories as $category)
+                    {{ $category->name }}
+                @endforeach
+            </td>
             <td>{{ $item->quantity }}</td>
             <td>{{ $item->formatted_updated_at }}</td>
         </tr>

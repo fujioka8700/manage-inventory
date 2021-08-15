@@ -95,8 +95,14 @@ class ItemController extends Controller
      */
     public function showEditForm(Item $item)
     {
+        $categories = $item->categories->pluck('id')->toArray();
+
+        $category_list = Category::all();
+
         return view('inventories/edit',[
             'current_item' => $item,
+            'categories' => $categories,
+            'category_list' => $category_list
         ]);
     }
 
@@ -112,6 +118,8 @@ class ItemController extends Controller
         $item->title = $request->title;
         $item->quantity = $request->quantity;
         $item->save();
+
+        $item->categories()->sync(request()->categories);
 
         return redirect()->route('item.index');
     }

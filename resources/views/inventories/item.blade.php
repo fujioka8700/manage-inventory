@@ -34,6 +34,14 @@
             <td>{{ $current_item->quantity }}</td>
         </tr>
         <tr>
+            <th>カテゴリ</th>
+            <td>
+                @foreach ($current_item->categories as $category)
+                {{ $category->name }}
+                @endforeach
+            </td>
+        </tr>
+        <tr>
             <th>在庫データ更新日</th>
             <td>{{ $current_item->formatted_show_item_updated_at }}</td>
         </tr>

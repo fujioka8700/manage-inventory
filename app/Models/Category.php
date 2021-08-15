@@ -10,7 +10,7 @@ class Category extends Model
     use HasFactory;
 
     /**
-     * belongsToManyメソッドで多対多として関連付け
+     * itemsテーブルと関連付け
      */
     public function items()
     {

@@ -39,10 +39,10 @@ class Item extends Model
     }
 
     /**
-     * belongsToManyメソッドで多対多として関連付け
+     * categoriesテーブルと関連付け、カテゴリを昇順に並び替え
      */
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Category')->withTimestamps();
+        return $this->belongsToMany('App\Models\Category')->withTimestamps()->withPivot('category_id')->orderBy('category_id', 'asc');;
     }
 }
