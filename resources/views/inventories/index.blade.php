@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-<a href="{{ route('inventory.new') }}">新規在庫データの追加</a>
+<a href="{{ route('item.new') }}">新規在庫データの追加</a>
 <h1>在庫一覧</h1>
-<form action="{{ route('inventory.index') }}" method="get">
+<form action="{{ route('item.index') }}" method="get">
     <input type="text" name="keyword"
         class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     <input type="submit" value="検索">
@@ -26,7 +26,7 @@
         @foreach ($items as $item)
         <tr>
             <td><img src="{{ Storage::url($item->file_path) }}" alt="" class="index-image_size"></td>
-            <td><a href="{{ route('inventory.item', [ 'item' => $item->id ]) }}">{{ $item->title }}</a></td>
+            <td><a href="{{ route('item.item', [ 'item' => $item->id ]) }}">{{ $item->title }}</a></td>
             <td>{{ $item->quantity }}</td>
             <td>{{ $item->formatted_updated_at }}</td>
         </tr>

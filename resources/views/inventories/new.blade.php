@@ -6,7 +6,7 @@
 
 @section('content')
 <div>
-    <a href="{{ route('inventory.index') }}">在庫一覧へ</a>
+    <a href="{{ route('item.index') }}">在庫一覧へ</a>
 </div>
 @if ($errors->any())
 <div>
@@ -18,7 +18,7 @@
 </div>
 @endif
 <h1>新しい在庫データの追加</h1>
-<form action="{{ route('inventory.new') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('item.new') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div>
         <label for="inventory_title">物品名</label>
