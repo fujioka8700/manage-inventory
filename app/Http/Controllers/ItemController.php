@@ -53,13 +53,6 @@ class ItemController extends Controller
     {
         $item = new Item();
 
-        // カテゴリ登録
-        // if ($request->checkbox) {
-        //     $category_id = implode(",", $request->checkbox);
-
-        //     $item->category_id = $category_id;
-        // }
-
         // サムネイル画像、登録
         $upload_image = $request->file('image');
         if ($upload_image) {
@@ -74,6 +67,9 @@ class ItemController extends Controller
         $item->title = $request->title;
         $item->quantity = $request->quantity;
         $item->save();
+
+        // 中間テーブルに、在庫のカテゴリを追加
+        $item->categories()->attach(request()->categories);
 
         return redirect()->route('item.index');
     }
