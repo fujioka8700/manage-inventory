@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    /**
+     * itemsテーブルと関連付け
+     */
+    public function items()
+    {
+        return $this->belongsToMany('App\Models\Item')->withTimestamps();
+    }
 }

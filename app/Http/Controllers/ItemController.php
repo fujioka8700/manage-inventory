@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class InventoryController extends Controller
+class ItemController extends Controller
 {
     /**
      * 在庫一覧、表示
@@ -38,7 +39,9 @@ class InventoryController extends Controller
      */
     public function showNewForm()
     {
-        return view('inventories/new');
+        $categories = Category::all();
+
+        return view('inventories/new', compact("categories"));
     }
 
     /**
@@ -50,6 +53,7 @@ class InventoryController extends Controller
     {
         $item = new Item();
 
+        // サムネイル画像、登録
         $upload_image = $request->file('image');
         if ($upload_image) {
             $path = $upload_image->store('public/uploads');
@@ -64,7 +68,10 @@ class InventoryController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('inventory.index');
+        // 中間テーブルに、在庫のカテゴリを追加
+        $item->categories()->attach(request()->categories);
+
+        return redirect()->route('item.index');
     }
 
     /**
@@ -88,8 +95,14 @@ class InventoryController extends Controller
      */
     public function showEditForm(Item $item)
     {
+        $categories = $item->categories->pluck('id')->toArray();
+
+        $category_list = Category::all();
+
         return view('inventories/edit',[
             'current_item' => $item,
+            'categories' => $categories,
+            'category_list' => $category_list
         ]);
     }
 
@@ -106,7 +119,9 @@ class InventoryController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('inventory.index');
+        $item->categories()->sync(request()->categories);
+
+        return redirect()->route('item.index');
     }
 
     /**
@@ -120,6 +135,6 @@ class InventoryController extends Controller
 
         Item::destroy($item->id);
 
-        return redirect()->route('inventory.index');
+        return redirect()->route('item.index');
     }
 }

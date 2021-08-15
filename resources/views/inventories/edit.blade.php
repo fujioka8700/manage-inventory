@@ -6,10 +6,10 @@
 
 @section('content')
 <div>
-    <a href="{{ route('inventory.index') }}">在庫一覧へ</a>
+    <a href="{{ route('item.index') }}">在庫一覧へ</a>
 </div>
 <div>
-    <a href="{{ route('inventory.item', [ 'item' => $current_item->id ]) }}">編集を中止する</a>
+    <a href="{{ route('item.item', [ 'item' => $current_item->id ]) }}">編集を中止する</a>
 </div>
 @if ($errors->any())
 <div>
@@ -21,7 +21,7 @@
 </div>
 @endif
 <h1>在庫データの更新</h1>
-<form action="{{ route('inventory.edit', [ 'item' => $current_item->id ]) }}" method="post">
+<form action="{{ route('item.edit', [ 'item' => $current_item->id ]) }}" method="post">
     @csrf
     <div>
         <label for="inventory_title">物品名</label>
@@ -33,6 +33,13 @@
         <input id="inventory_title" name="quantity" type="number" min="0" max="100"
             value="{{ old('quantity') ?? $current_item->quantity }}"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+    <div>
+        @foreach ($category_list as $category)
+        <label>
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}" @if(in_array($category->id, $categories)) checked @endif>{{ $category->name }}
+        </label>
+        @endforeach
     </div>
     <div>
         <input type="submit" value="この内容で更新する">

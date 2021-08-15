@@ -37,4 +37,12 @@ class Item extends Model
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['created_at'])->format('Y/m/d H:i:s');
     }
+
+    /**
+     * categoriesテーブルと関連付け、カテゴリを昇順に並び替え
+     */
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category')->withTimestamps()->withPivot('category_id')->orderBy('category_id', 'asc');;
+    }
 }
