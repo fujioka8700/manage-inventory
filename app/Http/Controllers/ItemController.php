@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\Place;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
@@ -41,7 +42,9 @@ class ItemController extends Controller
     {
         $categories = Category::all();
 
-        return view('inventories/new', compact("categories"));
+        $places = Place::all();
+
+        return view('inventories/new', compact("categories", "places"));
     }
 
     /**
@@ -51,6 +54,8 @@ class ItemController extends Controller
      */
     public function new(NewItem $request)
     {
+        ddd($request->place);
+
         $item = new Item();
 
         // サムネイル画像、登録
