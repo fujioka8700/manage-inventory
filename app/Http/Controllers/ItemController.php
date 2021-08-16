@@ -20,11 +20,19 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
+        $column = $request->column;
+        $sort = $request->sort;
 
         $query = Item::query();
 
+        // 単語で検索
         if (!empty($keyword)) {
             $query->where('title', 'LIKE', "%{$keyword}%");
+        }
+
+        // 昇順・降順、並べ替え
+        if (!empty($column) && !empty($sort)) {
+            $query->orderBy($column, $sort);
         }
 
         $items = $query->get();
