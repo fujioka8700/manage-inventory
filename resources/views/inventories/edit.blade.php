@@ -38,11 +38,24 @@
         <h2>カテゴリ</h2>
         @foreach ($category_list as $category)
         <label>
-            <input type="checkbox" name="categories[]" value="{{ $category->id }}" @if(in_array($category->id, $categories)) checked @endif>{{ $category->name }}
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}" @if(in_array($category->id,
+            $categories)) checked @endif>{{ $category->name }}
         </label>
         @endforeach
     </div>
-    {{-- ここに保管場所 --}}
+    <div>
+        <label>
+            <h2>保存場所</h2>
+            <select name="place"
+                class="block mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200">
+                <option value="">保管場所を選んでください</option>
+                @foreach ($place_list as $place)
+                <option value="{{ $place->id }}" @if (in_array($place->id, $places)) selected @endif>{{ $place->name }}
+                </option>
+                @endforeach
+            </select>
+        </label>
+    </div>
     <div>
         <input type="submit" value="この内容で更新する">
     </div>
