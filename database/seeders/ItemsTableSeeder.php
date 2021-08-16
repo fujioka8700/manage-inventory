@@ -104,5 +104,16 @@ class ItemsTableSeeder extends Seeder
                 'updated_at' => DateTime::dateTimeThisDecade(),
             ]);
         }
+
+        // サムネイル画像の登録
+        $array = range(1, count($items));
+        shuffle($array);
+
+        for ($i=0; $i < count($items); $i++) {
+            DB::table('items')->where('id', $i + 1)->update([
+                'file_name'=> $array[$i] . '.png',
+                'file_path'=>'public/uploads/' . $array[$i] . '.png'
+            ]);
+        }
     }
 }
