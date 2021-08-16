@@ -32,6 +32,7 @@
             <td></td>
             <td></td>
             <td>
+                {{-- 数量のソート --}}
                 <form action="{{ route('item.index') }}" method="get">
                     @csrf
                     <input type="hidden" name="column" value="quantity">
@@ -45,7 +46,21 @@
                     <input type="submit" value="多い">
                 </form>
             </td>
-            <td></td>
+            <td>
+                {{-- 更新日のソート --}}
+                <form action="{{ route('item.index') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="column" value="updated_at">
+                    <input type="hidden" name="sort" value="asc">
+                    <input type="submit" value="古い">
+                </form>
+                <form action="{{ route('item.index') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="column" value="updated_at">
+                    <input type="hidden" name="sort" value="desc">
+                    <input type="submit" value="新しい">
+                </form>
+            </td>
         </tr>
         @foreach ($items as $item)
         <tr>

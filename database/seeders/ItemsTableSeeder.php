@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Faker\Provider\DateTime;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -15,20 +16,14 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        $items = [
-            ['title' => 'トイレットペーパー', 'quantity'=> 2],
-            ['title' => 'ティシュペーパー', 'quantity'=> 4],
-            ['title' => 'ゴミ袋', 'quantity'=> 1],
-            ['title' => 'ヌメリ取り', 'quantity'=> 8],
-            ['title' => '洗濯洗剤', 'quantity'=> 3]
-        ];
+        $items = ['トイレットペーパー', 'ティッシュペーパー', 'ゴミ袋', 'ヌメリ取り', '洗濯洗剤'];
 
         foreach($items as $item) {
             DB::table('items')->insert([
-                'title' => $item['title'],
-                'quantity' => $item['quantity'],
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'title' => $item,
+                'quantity' => rand(0, 20),
+                'created_at' => Carbon::parse('2000-01-01 00:00:00'),
+                'updated_at' => DateTime::dateTimeThisDecade(),
             ]);
         }
     }
