@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\Place;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
@@ -41,7 +42,9 @@ class ItemController extends Controller
     {
         $categories = Category::all();
 
-        return view('inventories/new', compact("categories"));
+        $places = Place::all();
+
+        return view('inventories/new', compact("categories", "places"));
     }
 
     /**
@@ -68,8 +71,11 @@ class ItemController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        // 中間テーブルに、在庫のカテゴリを追加
+        // 在庫のカテゴリを保存
         $item->categories()->attach(request()->categories);
+
+        // 在庫の保管場所を保存
+        $item->places()->attach(request()->place);
 
         return redirect()->route('item.index');
     }
@@ -96,13 +102,17 @@ class ItemController extends Controller
     public function showEditForm(Item $item)
     {
         $categories = $item->categories->pluck('id')->toArray();
+        $places = $item->places->pluck('id')->toArray();
 
         $category_list = Category::all();
+        $place_list = Place::all();
 
         return view('inventories/edit',[
             'current_item' => $item,
             'categories' => $categories,
-            'category_list' => $category_list
+            'places' => $places,
+            'category_list' => $category_list,
+            'place_list' => $place_list
         ]);
     }
 
@@ -119,7 +129,11 @@ class ItemController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
+        // 在庫のカテゴリを更新
         $item->categories()->sync(request()->categories);
+
+        // 在庫の保管場所を更新
+        $item->places()->sync(request()->place);
 
         return redirect()->route('item.index');
     }
