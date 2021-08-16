@@ -31,11 +31,24 @@
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div>
+        <h2>カテゴリ</h2>
         @foreach ($categories as $category)
         <label>
             <input type="checkbox" name="categories[]" value="{{ $category->id }}">{{ $category->name }}
         </label>
         @endforeach
+    </div>
+    <div>
+        <label>
+            <h2>保存場所</h2>
+            <select name="place"
+                class="block mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200">
+                <option value="">保管場所を選んでください</option>
+                @foreach ($places as $place)
+                <option value="{{ $place->id }}">{{ $place->name }}</option>
+                @endforeach
+            </select>
+        </label>
     </div>
     <div>
         <input type="file" name="image" accept="image/png, image/jpeg">
