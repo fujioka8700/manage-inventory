@@ -71,10 +71,10 @@ class ItemController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        // 中間テーブルに、在庫のカテゴリを使用
+        // 在庫のカテゴリを保存
         $item->categories()->attach(request()->categories);
 
-        // 中間テーブルに、在庫の保管場所を使用
+        // 在庫の保管場所を保存
         $item->places()->attach(request()->place);
 
         return redirect()->route('item.index');
@@ -129,7 +129,11 @@ class ItemController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
+        // 在庫のカテゴリを更新
         $item->categories()->sync(request()->categories);
+
+        // 在庫の保管場所を更新
+        $item->places()->sync(request()->place);
 
         return redirect()->route('item.index');
     }
