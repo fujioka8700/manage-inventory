@@ -59,7 +59,9 @@
         </tr>
     </tbody>
 </table>
-<img src="{{ Storage::url($current_item->file_path) }}" alt="{{ $current_item->title }}">
+<div>
+    <img src="{{ Storage::url($current_item->file_path) }}" alt="{{ $current_item->title }}">
+</div>
 @endsection
 
 @section('scripts')

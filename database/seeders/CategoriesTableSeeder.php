@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['衛生', 'トイレ', '台所'];
+        $categories = [ '衛生', '洗濯', '掃除', '風呂' ];
 
         foreach ($categories as $category) {
             DB::table('categories')->insert([
