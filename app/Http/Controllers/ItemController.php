@@ -25,9 +25,16 @@ class ItemController extends Controller
 
         $query = Item::query();
 
-        // 単語で検索
+        // 物品名で検索
         if (!empty($keyword)) {
-            $query->where('title', 'LIKE', "%{$keyword}%");
+            if ($column == 'title') {
+                $query->where('title', 'LIKE', "%{$keyword}%");
+            } else {
+                // カテゴリ、もしくは保管場所で検索
+                $query->whereHas($column, function($query) use ($keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                });
+            }
         }
 
         // 昇順・降順、並べ替え
@@ -38,7 +45,8 @@ class ItemController extends Controller
         $items = $query->get();
 
         return view('inventories/index',[
-            'items' => $items
+            'items' => $items,
+            'selected_column' => $column
         ]);
     }
 

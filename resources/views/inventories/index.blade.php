@@ -9,6 +9,11 @@
 <h1>在庫一覧</h1>
 <form action="{{ route('item.index') }}" method="get">
     @csrf
+    <select name="column">
+        <option value="title" @if ($selected_column == 'title') selected @endif>物品名</option>
+        <option value="categories" @if ($selected_column == 'categories') selected @endif>カテゴリ</option>
+        <option value="places" @if ($selected_column == 'places') selected @endif>保管場所</option>
+    </select>
     <input type="text" name="keyword"
         class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     <input type="submit" value="検索">
