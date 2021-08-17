@@ -120,13 +120,15 @@ class ItemController extends Controller
         $categories = $item->categories->pluck('id')->toArray();
         $places = $item->places->pluck('id')->toArray();
 
+        $place = implode($places);
+
         $category_list = Category::all();
         $place_list = Place::all();
 
         return view('inventories/edit',[
             'current_item' => $item,
             'categories' => $categories,
-            'places' => $places,
+            'current_place' => $place,
             'category_list' => $category_list,
             'place_list' => $place_list
         ]);
@@ -140,6 +142,20 @@ class ItemController extends Controller
     public function edit(Item $item, EditItem $request)
     {
         $item = Item::find($item->id);
+
+        // サムネイル画像、更新
+        $upload_image = $request->file('image');
+        if ($upload_image) {
+            // サーバ上の、サムネイル画像削除
+            Storage::delete($item->file_path);
+
+            $path = $upload_image->store('public/uploads');
+
+            if ($path) {
+                $item->file_name = $upload_image->getClientOriginalName();
+                $item->file_path = $path;
+            }
+        }
 
         $item->title = $request->title;
         $item->quantity = $request->quantity;
@@ -161,6 +177,7 @@ class ItemController extends Controller
      */
     public function delete(Item $item)
     {
+        // サーバ上の、サムネイル画像削除
         Storage::delete($item->file_path);
 
         Item::destroy($item->id);
