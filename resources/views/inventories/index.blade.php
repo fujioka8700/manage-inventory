@@ -8,6 +8,12 @@
 <a href="{{ route('item.new') }}">新規在庫データの追加</a>
 <h1>在庫一覧</h1>
 <form action="{{ route('item.index') }}" method="get">
+    @csrf
+    <select name="column">
+        <option value="title" @if ($selected_column == 'title') selected @endif>物品名</option>
+        <option value="categories" @if ($selected_column == 'categories') selected @endif>カテゴリ</option>
+        <option value="places" @if ($selected_column == 'places') selected @endif>保管場所</option>
+    </select>
     <input type="text" name="keyword"
         class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     <input type="submit" value="検索">
@@ -25,6 +31,42 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                {{-- 数量のソート --}}
+                <form action="{{ route('item.index') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="column" value="quantity">
+                    <input type="hidden" name="sort" value="asc">
+                    <input type="submit" value="少ない">
+                </form>
+                <form action="{{ route('item.index') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="column" value="quantity">
+                    <input type="hidden" name="sort" value="desc">
+                    <input type="submit" value="多い">
+                </form>
+            </td>
+            <td>
+                {{-- 更新日のソート --}}
+                <form action="{{ route('item.index') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="column" value="updated_at">
+                    <input type="hidden" name="sort" value="asc">
+                    <input type="submit" value="古い">
+                </form>
+                <form action="{{ route('item.index') }}" method="get">
+                    @csrf
+                    <input type="hidden" name="column" value="updated_at">
+                    <input type="hidden" name="sort" value="desc">
+                    <input type="submit" value="新しい">
+                </form>
+            </td>
+        </tr>
         @foreach ($items as $item)
         <tr>
             <td><img src="{{ Storage::url($item->file_path) }}" alt="" class="index-image_size"></td>

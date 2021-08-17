@@ -20,17 +20,33 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
+        $column = $request->column;
+        $sort = $request->sort;
 
         $query = Item::query();
 
+        // 物品名で検索
         if (!empty($keyword)) {
-            $query->where('title', 'LIKE', "%{$keyword}%");
+            if ($column == 'title') {
+                $query->where('title', 'LIKE', "%{$keyword}%");
+            } else {
+                // カテゴリ、もしくは保管場所で検索
+                $query->whereHas($column, function($query) use ($keyword) {
+                    $query->where('name', 'LIKE', "%{$keyword}%");
+                });
+            }
+        }
+
+        // 昇順・降順、並べ替え
+        if (!empty($column) && !empty($sort)) {
+            $query->orderBy($column, $sort);
         }
 
         $items = $query->get();
 
         return view('inventories/index',[
-            'items' => $items
+            'items' => $items,
+            'selected_column' => $column
         ]);
     }
 
@@ -104,13 +120,15 @@ class ItemController extends Controller
         $categories = $item->categories->pluck('id')->toArray();
         $places = $item->places->pluck('id')->toArray();
 
+        $place = implode($places);
+
         $category_list = Category::all();
         $place_list = Place::all();
 
         return view('inventories/edit',[
             'current_item' => $item,
             'categories' => $categories,
-            'places' => $places,
+            'current_place' => $place,
             'category_list' => $category_list,
             'place_list' => $place_list
         ]);
@@ -124,6 +142,20 @@ class ItemController extends Controller
     public function edit(Item $item, EditItem $request)
     {
         $item = Item::find($item->id);
+
+        // サムネイル画像、更新
+        $upload_image = $request->file('image');
+        if ($upload_image) {
+            // サーバ上の、サムネイル画像削除
+            Storage::delete($item->file_path);
+
+            $path = $upload_image->store('public/uploads');
+
+            if ($path) {
+                $item->file_name = $upload_image->getClientOriginalName();
+                $item->file_path = $path;
+            }
+        }
 
         $item->title = $request->title;
         $item->quantity = $request->quantity;
@@ -145,6 +177,7 @@ class ItemController extends Controller
      */
     public function delete(Item $item)
     {
+        // サーバ上の、サムネイル画像削除
         Storage::delete($item->file_path);
 
         Item::destroy($item->id);
