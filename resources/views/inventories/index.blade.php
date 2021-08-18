@@ -87,6 +87,7 @@
         @endforeach
     </tbody>
 </table>
+{{ $items->appends(request()->input())->links('vendor/pagination/original_pagination_view') }}
 @else
 <p>見つかりませんでした。</p>
 @endif

@@ -42,7 +42,7 @@ class ItemController extends Controller
             $query->orderBy($column, $sort);
         }
 
-        $items = $query->get();
+        $items = $query->paginate(10);
 
         return view('inventories/index',[
             'items' => $items,
