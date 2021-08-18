@@ -9,6 +9,7 @@ use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -42,7 +43,7 @@ class ItemController extends Controller
             $query->orderBy($column, $sort);
         }
 
-        $items = $query->get();
+        $items = $query->paginate(10);
 
         return view('inventories/index',[
             'items' => $items,
