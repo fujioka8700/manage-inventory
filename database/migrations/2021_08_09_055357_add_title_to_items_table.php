@@ -14,7 +14,7 @@ class AddTitleToItemsTable extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->string('title', 20);
+            $table->string('title', 20)->default('');
         });
     }
 
