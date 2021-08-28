@@ -19,6 +19,33 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
+        $index_request = $request->all();
+        \Debugbar::info($index_request['column']);
+
+        $query = Item::query();
+
+        // 在庫を検索する
+        if(!empty($index_request['keyword'])) {
+            $search_keyword = $index_request['keyword'];
+
+            // 物品名で検索された場合
+            if ($index_request['column'] == 'title') {
+                // $query->where('title', 'LIKE', "%{$keyword}%");
+                $query->where('title', 'LIKE', "%{$search_keyword}%");
+                \Debugbar::info($query->get());
+            }
+
+            // カテゴリか、保管場所で検索された場合
+            if ($index_request['column'] != 'title') {
+                // $search_keyword = $index_request['keyword'];
+
+                $query->whereHas($index_request['column'], function($query) use ($search_keyword) {
+                    $query->where('name', 'LIKE', "%{$search_keyword}%");
+                });
+                \Debugbar::info($query->get());
+            }
+        }
+
         $keyword = $request->input('keyword');
         $column = $request->column;
         $sort = $request->sort;
