@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
+    private $item;
+
+    public function __construct(Item $item)
+    {
+        $this->item = $item;
+    }
+
     /**
-     * 在庫一覧、表示
+     * 在庫一覧ページ（一覧表示、検索、ソート）
      * @param App\Http\Requests\IndexItem $request
      * @return Illuminate\View\View
      */
@@ -24,10 +31,8 @@ class ItemController extends Controller
 
         $items_query = Item::query();
 
-        $items = new Item();
-
         // 検索キーワードがある場合のみ、在庫を検索する。
-        $items_query = $items->inventorySearch($items_query, $index_request);
+        $this->item->inventorySearch($items_query, $index_request);
 
         // 在庫を検索する
         // if(!empty($index_request['keyword'])) {
