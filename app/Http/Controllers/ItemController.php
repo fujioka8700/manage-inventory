@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Place;
+use App\Http\Requests\IndexItem;
 use App\Http\Requests\NewItem;
 use App\Http\Requests\EditItem;
 use Illuminate\Http\Request;
@@ -14,37 +15,38 @@ class ItemController extends Controller
 {
     /**
      * 在庫一覧、表示
-     * @param Illuminate\Http\Request
+     * @param App\Http\Requests\IndexItem $request
      * @return Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(IndexItem $request)
     {
         $index_request = $request->all();
-        \Debugbar::info($index_request['column']);
 
-        $query = Item::query();
+        $items_query = Item::query();
+
+        $items = new Item();
+
+        // 検索キーワードがある場合のみ、在庫を検索する。
+        $items_query = $items->inventorySearch($items_query, $index_request);
 
         // 在庫を検索する
-        if(!empty($index_request['keyword'])) {
-            $search_keyword = $index_request['keyword'];
+        // if(!empty($index_request['keyword'])) {
+        //     $search_keyword = $index_request['keyword'];
 
-            // 物品名で検索された場合
-            if ($index_request['column'] == 'title') {
-                // $query->where('title', 'LIKE', "%{$keyword}%");
-                $query->where('title', 'LIKE', "%{$search_keyword}%");
-                \Debugbar::info($query->get());
-            }
+        //     // 物品名で検索された場合
+        //     if ($index_request['column'] == 'title') {
+        //         $items_query->where('title', 'LIKE', "%{$search_keyword}%");
+        //         \Debugbar::info($items_query->get());
+        //     }
 
-            // カテゴリか、保管場所で検索された場合
-            if ($index_request['column'] != 'title') {
-                // $search_keyword = $index_request['keyword'];
-
-                $query->whereHas($index_request['column'], function($query) use ($search_keyword) {
-                    $query->where('name', 'LIKE', "%{$search_keyword}%");
-                });
-                \Debugbar::info($query->get());
-            }
-        }
+        //     // カテゴリか、保管場所で検索された場合
+        //     if ($index_request['column'] != 'title') {
+        //         $items_query->whereHas($index_request['column'], function($items_query) use ($search_keyword) {
+        //             $items_query->where('name', 'LIKE', "%{$search_keyword}%");
+        //         });
+        //         \Debugbar::info($items_query->get());
+        //     }
+        // }
 
         $keyword = $request->input('keyword');
         $column = $request->column;
@@ -92,7 +94,7 @@ class ItemController extends Controller
 
     /**
      * 新しい在庫作成
-     * @param App\Http\Requests\NewItem
+     * @param App\Http\Requests\NewItem $request
      * @return Illuminate\Support\Facades\Redirect
      */
     public function new(NewItem $request)
@@ -125,7 +127,7 @@ class ItemController extends Controller
 
     /**
      * 在庫データ詳細、表示
-     * @param App\Models\Item
+     * @param App\Models\Item $item
      * @return Illuminate\View\View
      */
     public function showItem(Item $item)
@@ -139,7 +141,7 @@ class ItemController extends Controller
 
     /**
      * 在庫データ更新フォーム、表示
-     * @param App\Models\Item
+     * @param App\Models\Item $item
      * @return Illuminate\View\View
      */
     public function showEditForm(Item $item)
@@ -163,7 +165,8 @@ class ItemController extends Controller
 
     /**
      * 在庫データの更新
-     * @param App\Models\Item
+     * @param App\Models\Item $item
+     * @param App\Http\Requests\EditItem $request
      * @return Illuminate\Support\Facades\Redirect
      */
     public function edit(Item $item, EditItem $request)
@@ -199,7 +202,7 @@ class ItemController extends Controller
 
     /**
      * 在庫データの削除
-     * @param App\Models\Item
+     * @param App\Models\Item $item
      * @return Illuminate\Support\Facades\Redirect
      */
     public function delete(Item $item)

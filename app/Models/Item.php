@@ -12,7 +12,8 @@ class Item extends Model
     use HasFactory;
 
     /**
-     * 整形した更新日(在庫一覧)
+     * 整形した更新日(在庫一覧ページ)
+     * メソッド名が、bladeで引数になるので、まとめることは不可。
      * @return string
      */
     public function getFormattedUpdatedAtAttribute()
@@ -21,7 +22,8 @@ class Item extends Model
     }
 
     /**
-     * 整形した更新日(在庫データ詳細)
+     * 整形した更新日(在庫データ詳細ページ)
+     * メソッド名が、bladeで引数になるので、まとめることは不可。
      * @return string
      */
     public function getFormattedShowItemUpdatedAtAttribute()
@@ -30,7 +32,8 @@ class Item extends Model
     }
 
     /**
-     * 整形した作成日(在庫データ詳細)
+     * 整形した作成日(在庫データ詳細ページ)
+     * メソッド名が、bladeで引数になるので、まとめることは不可。
      * @return string
      */
     public function getFormattedShowItemCreatedAtAttribute()
@@ -52,5 +55,30 @@ class Item extends Model
     public function places()
     {
         return $this->belongsToMany('App\Models\Place')->withTimestamps();
+    }
+
+    /**
+     * @param Illuminate\Database\Eloquent\Model $items_query
+     * @param array $index_request
+     */
+    public function inventorySearch($items_query, $index_request)
+    {
+        if(!empty($index_request['keyword'])) {
+            $search_keyword = $index_request['keyword'];
+
+            // 物品名で検索された場合
+            if ($index_request['column'] == 'title') {
+                $items_query->where('title', 'LIKE', "%{$search_keyword}%");
+                \Debugbar::info($items_query->get());
+            }
+
+            // カテゴリか、保管場所で検索された場合
+            if ($index_request['column'] != 'title') {
+                $items_query->whereHas($index_request['column'], function($items_query) use ($search_keyword) {
+                    $items_query->where('name', 'LIKE', "%{$search_keyword}%");
+                });
+                \Debugbar::info($items_query->get());
+            }
+        }
     }
 }
